@@ -1,3 +1,26 @@
+# Circle to Search on Pixel
+
+[Русская версия](#circle-to-search-pixel)
+
+With gesture navigation enabled, press and hold the bottom navigation bar to open MiCTS over the app you’re using. Press Back to return to the same screen. This fork is based on AKS-Labs v0.5 and was tested on a Pixel 10 Pro running GrapheneOS. Its package name, `com.akslabs.circletosearch.pixelbar`, lets you install it alongside the original app.
+
+### Build the Pixel APK
+
+Check out the `pixel-navbar` branch. You’ll need JDK 21 and Android SDK Platform 36. Set `ANDROID_HOME` to your SDK directory or configure the SDK in Android Studio. Run the Gradle wrapper from the repository root.
+
+| System | Command |
+| --- | --- |
+| Windows PowerShell | `.\gradlew.bat :app:assembleDebug` |
+| Linux or macOS | `sh ./gradlew :app:assembleDebug` |
+
+The Pixel APK is written to `app/build/outputs/apk/debug/app-arm64-v8a-debug.apk`. Gradle signs it with your local debug key. Keep that key to install future builds over this one.
+
+### Set up the gesture
+
+1. Install the APK in the Android profile where you use MiCTS.
+2. In the app’s gesture area settings, assign **Open Application** to the long press and select **MiCTS**. The touch area moves to the center of the navigation bar. A width of 332 pixels was tested on a 1080-pixel-wide display.
+3. In Android’s **Accessibility** settings, enable **Circle to Search (Pixel)**. Open another app and hold the navigation bar until you feel it vibrate. The search opens while your finger is still down.
+
 ## Circle to Search (Pixel)
 
 Эта ветка основана на AKS-Labs v0.5. На Pixel с жестовой навигацией удержание нижней полоски вызывает MiCTS поверх текущего приложения. Проверено на Pixel 10 Pro с GrapheneOS. Тестовая сборка использует отдельный идентификатор `com.akslabs.circletosearch.pixelbar` и устанавливается рядом с оригиналом.
