@@ -1,4 +1,4 @@
-package com.akslabs.circletosearch.ui
+package com.akslabs.circletosearch.pixelbar.ui
 
 import android.content.Context
 import android.net.Uri
@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.*
-import com.akslabs.circletosearch.ocr.TesseractEngine
+import com.akslabs.circletosearch.pixelbar.ocr.TesseractEngine
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Locale

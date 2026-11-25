@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.utils
+package com.akslabs.circletosearch.pixelbar.utils
 
 import android.graphics.Bitmap
 import android.util.Log

@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -50,7 +50,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.akslabs.circletosearch.R
+import com.akslabs.circletosearch.pixelbar.R
 
 @Composable
 fun FriendlyMessageBubble(

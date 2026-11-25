@@ -1,4 +1,4 @@
-package com.akslabs.circletosearch.ui
+package com.akslabs.circletosearch.pixelbar.ui
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -71,9 +71,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.akslabs.circletosearch.utils.QrResult
-import com.akslabs.circletosearch.utils.QrResultWithBounds
-import com.akslabs.circletosearch.utils.QrScanner
+import com.akslabs.circletosearch.pixelbar.utils.QrResult
+import com.akslabs.circletosearch.pixelbar.utils.QrResultWithBounds
+import com.akslabs.circletosearch.pixelbar.utils.QrScanner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

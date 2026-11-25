@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 /*
  * Copyright (C) 2025 AKS-Labs (original author)
@@ -63,7 +63,7 @@ import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.akslabs.circletosearch.R
+import com.akslabs.circletosearch.pixelbar.R
 
 
 /*

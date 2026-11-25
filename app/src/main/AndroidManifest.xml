@@ -32,7 +32,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Circle to Search (Pixel)"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CircleToSearch"
@@ -42,7 +42,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Circle to Search (Pixel)"
             android:theme="@style/Theme.CircleToSearch">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,7 @@
         <service
             android:name=".CircleToSearchAccessibilityService"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Circle to Search (Pixel)"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -84,7 +84,7 @@
 
         <service
             android:name=".CircleToSearchRecognitionService"
-            android:label="@string/app_name"
+            android:label="Circle to Search (Pixel)"
             android:exported="true"
             android:permission="android.permission.BIND_RECOGNITION_SERVICE">
             <intent-filter>
@@ -121,7 +121,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.akslabs.circletosearch.fileprovider"
+            android:authorities="com.akslabs.circletosearch.pixelbar.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -133,4 +133,5 @@
 
     </application>
 
+    <queries><package android:name="com.parallelc.micts" /></queries>
 </manifest>

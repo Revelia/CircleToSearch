@@ -17,11 +17,11 @@
  *
  */
 
-package com.akslabs.circletosearch.ui
+package com.akslabs.circletosearch.pixelbar.ui
 
 import android.graphics.Bitmap
 import android.graphics.Rect
-import com.akslabs.circletosearch.CircleToSearchAccessibilityService
+import com.akslabs.circletosearch.pixelbar.CircleToSearchAccessibilityService
 import android.util.Base64
 import android.view.Display
 import android.view.ViewGroup
@@ -152,20 +152,20 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.webkit.WebSettingsCompat
-import com.akslabs.circletosearch.data.SearchEngine
-import com.akslabs.circletosearch.ui.components.FriendlyMessageBubble
-import com.akslabs.circletosearch.ui.components.searchWithGoogleLens
-import com.akslabs.circletosearch.ui.theme.OverlayGradientColors
-import com.akslabs.circletosearch.utils.FriendlyMessageManager
-import com.akslabs.circletosearch.utils.ImageSearchUploader
-import com.akslabs.circletosearch.utils.ImageUtils
-import com.akslabs.circletosearch.utils.QrResult
-import com.akslabs.circletosearch.utils.QrResultWithBounds
-import com.akslabs.circletosearch.utils.QrScanner
-import com.akslabs.circletosearch.ui.qrResultShortLabel
-import com.akslabs.circletosearch.utils.UIPreferences
-import com.akslabs.circletosearch.ui.components.MoreAppsBottomSheet
-import com.akslabs.circletosearch.ui.components.DonateBottomSheet
+import com.akslabs.circletosearch.pixelbar.data.SearchEngine
+import com.akslabs.circletosearch.pixelbar.ui.components.FriendlyMessageBubble
+import com.akslabs.circletosearch.pixelbar.ui.components.searchWithGoogleLens
+import com.akslabs.circletosearch.pixelbar.ui.theme.OverlayGradientColors
+import com.akslabs.circletosearch.pixelbar.utils.FriendlyMessageManager
+import com.akslabs.circletosearch.pixelbar.utils.ImageSearchUploader
+import com.akslabs.circletosearch.pixelbar.utils.ImageUtils
+import com.akslabs.circletosearch.pixelbar.utils.QrResult
+import com.akslabs.circletosearch.pixelbar.utils.QrResultWithBounds
+import com.akslabs.circletosearch.pixelbar.utils.QrScanner
+import com.akslabs.circletosearch.pixelbar.ui.qrResultShortLabel
+import com.akslabs.circletosearch.pixelbar.utils.UIPreferences
+import com.akslabs.circletosearch.pixelbar.ui.components.MoreAppsBottomSheet
+import com.akslabs.circletosearch.pixelbar.ui.components.DonateBottomSheet
 import android.net.Uri
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.Dispatchers
@@ -173,7 +173,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import androidx.webkit.WebViewFeature
-import com.akslabs.circletosearch.data.isDirectUpload
+import com.akslabs.circletosearch.pixelbar.data.isDirectUpload
 import kotlin.math.max
 import kotlin.math.min
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -189,7 +189,7 @@ fun CircleToSearchScreen(
     screenshot: Bitmap?,
     onClose: () -> Unit,
     searchModeOverride: Boolean? = null,
-    copyTextManager: com.akslabs.circletosearch.ui.components.CopyTextOverlayManager? = null,
+    copyTextManager: com.akslabs.circletosearch.pixelbar.ui.components.CopyTextOverlayManager? = null,
     onCopyText: () -> Unit = {},
     onExitCopyMode: () -> Unit = {}
 ) {
@@ -658,17 +658,17 @@ fun CircleToSearchScreen(
                             
                             val result = searchWithGoogleLens(uri, context)
                             when (result) {
-                                com.akslabs.circletosearch.ui.components.LensLaunchResult.LAUNCHED_DIRECTLY -> {
+                                com.akslabs.circletosearch.pixelbar.ui.components.LensLaunchResult.LAUNCHED_DIRECTLY -> {
                                     // Lens launched directly — safe to dismiss the overlay
                                     onClose()
                                     return@LaunchedEffect
                                 }
-                                com.akslabs.circletosearch.ui.components.LensLaunchResult.LAUNCHED_VIA_CHOOSER -> {
+                                com.akslabs.circletosearch.pixelbar.ui.components.LensLaunchResult.LAUNCHED_VIA_CHOOSER -> {
                                     // Chooser shown — overlay must stay open, user picks the app
                                     isLoading = false
                                     return@LaunchedEffect
                                 }
-                                com.akslabs.circletosearch.ui.components.LensLaunchResult.FAILED -> {
+                                com.akslabs.circletosearch.pixelbar.ui.components.LensLaunchResult.FAILED -> {
                                     // Fallback to multi-search
                                     android.util.Log.e("CircleToSearch", "Google Lens launch failed, falling back to multi-search")
                                 }
@@ -1197,7 +1197,7 @@ fun CircleToSearchScreen(
                     if (selectedEngine.name == "Google") {
                         // Si c'est Google, on affiche ta belle typo officielle
                         Image(
-                            painter = painterResource(id = com.akslabs.circletosearch.R.drawable.googletypo),
+                            painter = painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.googletypo),
                             contentDescription = "Google Search",
                             modifier = Modifier.height(50.dp), // Hauteur ajustable selon ton PNG
                             colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White)
@@ -1406,7 +1406,7 @@ fun CircleToSearchScreen(
                                 ) {
                                     // App logo
                                     Image(
-                                        painter = painterResource(id = com.akslabs.circletosearch.R.drawable.circletosearch),
+                                        painter = painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.circletosearch),
                                         contentDescription = "Logo",
                                         modifier = Modifier
                                             .size(44.dp)
@@ -1452,14 +1452,14 @@ fun CircleToSearchScreen(
                                         },
                                         modifier = Modifier.size(44.dp)
                                     ) {
-                                        Icon(painterResource(id = com.akslabs.circletosearch.R.drawable.circletosearch), contentDescription = "Lens", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(26.dp))
+                                        Icon(painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.circletosearch), contentDescription = "Lens", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(26.dp))
                                     }
                                 }
                             }
 
                             // Circular Button: Assist Copy (Music Icon)
-                            val assistNodes by com.akslabs.circletosearch.data.AssistDataRepository.assistNodes.collectAsState()
-                            val isAssistDataReady by com.akslabs.circletosearch.data.AssistDataRepository.isDataReady.collectAsState()
+                            val assistNodes by com.akslabs.circletosearch.pixelbar.data.AssistDataRepository.assistNodes.collectAsState()
+                            val isAssistDataReady by com.akslabs.circletosearch.pixelbar.data.AssistDataRepository.isDataReady.collectAsState()
 
                             IconButton(
                                 onClick = {
@@ -1580,7 +1580,7 @@ fun CircleToSearchScreen(
                                     isExtractingEntities = true
                                     scope.launch(kotlinx.coroutines.Dispatchers.IO) {
                                         val bmp = screenshot ?: return@launch
-                                        val textNodes = com.akslabs.circletosearch.ocr.TesseractEngine.extractText(context, bmp)
+                                        val textNodes = com.akslabs.circletosearch.pixelbar.ocr.TesseractEngine.extractText(context, bmp)
                                         val entities = mutableListOf<SmartEntity>()
                                         
                                         val urlRegex = android.util.Patterns.WEB_URL.toRegex()
@@ -1622,12 +1622,12 @@ fun CircleToSearchScreen(
                             }
 
                             // Donate
-                            BottomBarButton("Donate", { Icon(painterResource(id = com.akslabs.circletosearch.R.drawable.donation), null, modifier = Modifier.size(22.dp)) }) {
+                            BottomBarButton("Donate", { Icon(painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.donation), null, modifier = Modifier.size(22.dp)) }) {
                                 showDonateSheet = true
                             }
 
                             // Copy Text
-                            BottomBarButton("Copy Text", { Icon(painterResource(id = com.akslabs.circletosearch.R.drawable.ocr), null, modifier = Modifier.size(20.dp)) }) {
+                            BottomBarButton("Copy Text", { Icon(painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.ocr), null, modifier = Modifier.size(20.dp)) }) {
                                 copyTextManager?.setOcrOnlyMode()
                                 isCopyMode = true
                                 isCopyTextTriggered = true
@@ -1735,7 +1735,7 @@ fun CircleToSearchScreen(
                                                     val fileName = "selection_${java.util.UUID.randomUUID()}.png"
                                                     val path = ImageUtils.saveBitmap(context, selectedBitmap!!, fileName)
                                                     val file = java.io.File(path)
-                                                    val uri = androidx.core.content.FileProvider.getUriForFile(context, "com.akslabs.circletosearch.fileprovider", file)
+                                                    val uri = androidx.core.content.FileProvider.getUriForFile(context, "com.akslabs.circletosearch.pixelbar.fileprovider", file)
                                                     val shareIntent = android.content.Intent(android.content.Intent.ACTION_SEND).apply { 
                                                         type = "image/png"
                                                         putExtra(android.content.Intent.EXTRA_STREAM, uri)

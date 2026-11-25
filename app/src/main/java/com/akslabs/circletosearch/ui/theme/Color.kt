@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.ui.theme
+package com.akslabs.circletosearch.pixelbar.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

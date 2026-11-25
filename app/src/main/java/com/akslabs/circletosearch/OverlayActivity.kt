@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch
+package com.akslabs.circletosearch.pixelbar
 
 import android.os.Bundle
 import android.view.WindowManager
@@ -29,10 +29,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.akslabs.circletosearch.data.BitmapRepository
-import com.akslabs.circletosearch.ui.CircleToSearchScreen
-import com.akslabs.circletosearch.ui.components.CopyTextOverlayManager
-import com.akslabs.circletosearch.ui.theme.CircleToSearchTheme
+import com.akslabs.circletosearch.pixelbar.data.BitmapRepository
+import com.akslabs.circletosearch.pixelbar.ui.CircleToSearchScreen
+import com.akslabs.circletosearch.pixelbar.ui.components.CopyTextOverlayManager
+import com.akslabs.circletosearch.pixelbar.ui.theme.CircleToSearchTheme
 
 class OverlayActivity : ComponentActivity() {
     
@@ -72,7 +72,7 @@ class OverlayActivity : ComponentActivity() {
                         searchModeOverride = searchModeOverride.value,
                         onClose = { 
                             BitmapRepository.clear()
-                            com.akslabs.circletosearch.data.AssistDataRepository.clear()
+                            com.akslabs.circletosearch.pixelbar.data.AssistDataRepository.clear()
                             finish() 
                         },
                         copyTextManager = copyTextManager.value,
@@ -131,9 +131,9 @@ class OverlayActivity : ComponentActivity() {
         copyTextManager.value?.dismiss()
         copyTextManager.value = null
         if (isFinishing) {
-             com.akslabs.circletosearch.data.BitmapRepository.clear()
-             com.akslabs.circletosearch.data.AssistDataRepository.clear()
-             com.akslabs.circletosearch.utils.StorageUtils.clearAppCache(this)
+             com.akslabs.circletosearch.pixelbar.data.BitmapRepository.clear()
+             com.akslabs.circletosearch.pixelbar.data.AssistDataRepository.clear()
+             com.akslabs.circletosearch.pixelbar.utils.StorageUtils.clearAppCache(this)
         }
     }
 }

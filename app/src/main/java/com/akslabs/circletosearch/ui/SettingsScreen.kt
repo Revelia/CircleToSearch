@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.ui
+package com.akslabs.circletosearch.pixelbar.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,9 +39,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.akslabs.circletosearch.data.SearchEngine
-import com.akslabs.circletosearch.utils.UIPreferences
-import com.akslabs.circletosearch.ui.components.UnifiedSearchMethodSelector
+import com.akslabs.circletosearch.pixelbar.data.SearchEngine
+import com.akslabs.circletosearch.pixelbar.utils.UIPreferences
+import com.akslabs.circletosearch.pixelbar.ui.components.UnifiedSearchMethodSelector
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 import android.annotation.SuppressLint
 import android.content.ClipData
@@ -30,9 +30,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.Alignment
-import com.akslabs.circletosearch.data.BitmapRepository
-import com.akslabs.circletosearch.ocr.TesseractEngine
-import com.akslabs.circletosearch.utils.ImageUtils
+import com.akslabs.circletosearch.pixelbar.data.BitmapRepository
+import com.akslabs.circletosearch.pixelbar.ocr.TesseractEngine
+import com.akslabs.circletosearch.pixelbar.utils.ImageUtils
 import kotlinx.coroutines.*
 import java.util.UUID
 

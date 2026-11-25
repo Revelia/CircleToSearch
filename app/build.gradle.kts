@@ -24,14 +24,14 @@ plugins {
 }
 
 android {
-    namespace = "com.akslabs.circletosearch"
+    namespace = "com.akslabs.circletosearch.pixelbar"
     compileSdk {
         version = release(36)
     }
 
 
     defaultConfig {
-        applicationId = "com.akslabs.circletosearch"
+        applicationId = "com.akslabs.circletosearch.pixelbar"
         minSdk = 29
         targetSdk = 36
         versionCode = 7

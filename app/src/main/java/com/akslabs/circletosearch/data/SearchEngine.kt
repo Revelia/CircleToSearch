@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.data
+package com.akslabs.circletosearch.pixelbar.data
 
 sealed class SearchEngine(val displayName: String) {
     object Google : SearchEngine("Google")

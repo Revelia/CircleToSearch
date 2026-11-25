@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,6 +1,6 @@
-package com.akslabs.circletosearch.data
+package com.akslabs.circletosearch.pixelbar.data
 
-import com.akslabs.circletosearch.ui.components.TextNode
+import com.akslabs.circletosearch.pixelbar.ui.components.TextNode
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

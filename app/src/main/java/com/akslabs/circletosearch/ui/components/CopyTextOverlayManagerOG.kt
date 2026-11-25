@@ -7,7 +7,7 @@
 // * punch-out to highlight selectable text regions on screen.
 // */
 //
-//package com.akslabs.circletosearch.ui.components
+//package com.akslabs.circletosearch.pixelbar.ui.components
 //
 //import android.annotation.SuppressLint
 //import android.content.ClipData
@@ -110,12 +110,12 @@
 //        scanJob = scope.launch {
 //            android.util.Log.d("CopyText", "scanNodes triggered")
 //            // Check for snapshot nodes first
-//            val snapshot = com.akslabs.circletosearch.CircleToSearchAccessibilityService.lastCapturedNodes
+//            val snapshot = com.akslabs.circletosearch.pixelbar.CircleToSearchAccessibilityService.lastCapturedNodes
 //            if (snapshot != null) {
 //                android.util.Log.d("CopyText", "Using snapshot with ${snapshot.size} nodes")
 //                detectedNodes.clear()
 //                detectedNodes.addAll(snapshot)
-//                com.akslabs.circletosearch.CircleToSearchAccessibilityService.lastCapturedNodes = null
+//                com.akslabs.circletosearch.pixelbar.CircleToSearchAccessibilityService.lastCapturedNodes = null
 //                view.invalidate()
 //                return@launch
 //            }

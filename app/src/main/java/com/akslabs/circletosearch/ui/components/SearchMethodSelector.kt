@@ -2,7 +2,7 @@
  * Copyright (C) 2025 AKS-Labs
  */
 
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.akslabs.circletosearch.utils.UIPreferences
+import com.akslabs.circletosearch.pixelbar.utils.UIPreferences
 
 /**
  * A unified search method selector component that allows users to switch

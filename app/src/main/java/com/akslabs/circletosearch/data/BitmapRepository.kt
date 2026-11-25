@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.data
+package com.akslabs.circletosearch.pixelbar.data
 
 import android.graphics.Bitmap
 

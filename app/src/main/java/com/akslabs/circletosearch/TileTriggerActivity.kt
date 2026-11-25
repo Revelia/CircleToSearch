@@ -2,7 +2,7 @@
  * Copyright (C) 2025 AKS-Labs
  */
 
-package com.akslabs.circletosearch
+package com.akslabs.circletosearch.pixelbar
 
 import android.app.Activity
 import android.os.Build

@@ -18,7 +18,7 @@
  */
 
 
-package com.akslabs.circletosearch
+package com.akslabs.circletosearch.pixelbar
 
 import android.content.Intent
 import android.net.Uri
@@ -52,12 +52,12 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.akslabs.circletosearch.ui.components.PrivacyDialog
-import com.akslabs.circletosearch.ui.theme.CircleToSearchTheme
-import com.akslabs.circletosearch.utils.PrivacyPreferences
-import com.akslabs.circletosearch.ui.components.DonateBottomSheet
-import com.akslabs.circletosearch.ui.components.AccessibilityDisclosureDialog
-import com.akslabs.circletosearch.ui.components.UnifiedSearchMethodSelector
+import com.akslabs.circletosearch.pixelbar.ui.components.PrivacyDialog
+import com.akslabs.circletosearch.pixelbar.ui.theme.CircleToSearchTheme
+import com.akslabs.circletosearch.pixelbar.utils.PrivacyPreferences
+import com.akslabs.circletosearch.pixelbar.ui.components.DonateBottomSheet
+import com.akslabs.circletosearch.pixelbar.ui.components.AccessibilityDisclosureDialog
+import com.akslabs.circletosearch.pixelbar.ui.components.UnifiedSearchMethodSelector
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -73,8 +73,8 @@ class MainActivity : ComponentActivity() {
                     var currentScreen by remember { mutableStateOf("home") }
                     androidx.compose.animation.Crossfade(targetState = currentScreen) { screen ->
                         when (screen) {
-                            "settings" -> com.akslabs.circletosearch.ui.OverlaySettingsScreen(onBack = { currentScreen = "home" })
-                            "ocr_settings" -> com.akslabs.circletosearch.ui.OcrSettingsScreen(onBack = { currentScreen = "home" })
+                            "settings" -> com.akslabs.circletosearch.pixelbar.ui.OverlaySettingsScreen(onBack = { currentScreen = "home" })
+                            "ocr_settings" -> com.akslabs.circletosearch.pixelbar.ui.OcrSettingsScreen(onBack = { currentScreen = "home" })
                             else -> SetupScreen(
                                 onSettingsClick = { currentScreen = "settings" },
                                 onOcrSettingsClick = { currentScreen = "ocr_settings" }
@@ -351,7 +351,7 @@ fun SetupScreen(onSettingsClick: () -> Unit, onOcrSettingsClick: () -> Unit) {
             )
             BubbleSwitch(context)
             
-            val uiPreferences = remember { com.akslabs.circletosearch.utils.UIPreferences(context) }
+            val uiPreferences = remember { com.akslabs.circletosearch.pixelbar.utils.UIPreferences(context) }
 
             Column(
                 modifier = Modifier
@@ -542,7 +542,7 @@ fun SocialLinksRow(
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
             Icon(
-                painter = painterResource(id = com.akslabs.circletosearch.R.drawable.github),
+                painter = painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.github),
                 contentDescription = "Github",
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = Modifier.padding(8.dp)
@@ -555,7 +555,7 @@ fun SocialLinksRow(
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
             Icon(
-                painter = painterResource(id = com.akslabs.circletosearch.R.drawable.donation),
+                painter = painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.donation),
                 contentDescription = "Donate",
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = Modifier.padding(8.dp)
@@ -571,7 +571,7 @@ fun SocialLinksRow(
             modifier = Modifier.padding(horizontal = 8.dp)
         ) {
             Icon(
-                painter = painterResource(id = com.akslabs.circletosearch.R.drawable.telegram),
+                painter = painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.telegram),
                 contentDescription = "Telegram",
                 tint = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = Modifier.padding(8.dp).size(23.dp)
@@ -619,7 +619,7 @@ fun SupportDialog(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
-                            painter = painterResource(id = com.akslabs.circletosearch.R.drawable.donation),
+                            painter = painterResource(id = com.akslabs.circletosearch.pixelbar.R.drawable.donation),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(48.dp)

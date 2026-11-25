@@ -2,7 +2,7 @@
  * Copyright (C) 2025 AKS-Labs
  */
 
-package com.akslabs.circletosearch.data
+package com.akslabs.circletosearch.pixelbar.data
 
 import android.content.Context
 import android.content.SharedPreferences

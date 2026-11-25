@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch.ui.theme
+package com.akslabs.circletosearch.pixelbar.ui.theme
 
 import android.app.Activity
 import android.os.Build

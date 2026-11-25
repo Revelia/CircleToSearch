@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch
+package com.akslabs.circletosearch.pixelbar
 
 import android.service.voice.VoiceInteractionService
 

@@ -1,12 +1,12 @@
-package com.akslabs.circletosearch.ocr
+package com.akslabs.circletosearch.pixelbar.ocr
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Rect
 import android.graphics.RectF
 import android.util.Log
-import com.akslabs.circletosearch.ui.components.TextNode
-import com.akslabs.circletosearch.ui.components.Word
+import com.akslabs.circletosearch.pixelbar.ui.components.TextNode
+import com.akslabs.circletosearch.pixelbar.ui.components.Word
 import com.googlecode.tesseract.android.TessBaseAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

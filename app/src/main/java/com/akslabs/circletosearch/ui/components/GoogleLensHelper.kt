@@ -1,4 +1,4 @@
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 import android.content.Context
 import android.content.Intent
@@ -54,7 +54,7 @@ fun searchWithGoogleLens(uri: Uri, context: Context): LensLaunchResult {
 
                 FileProvider.getUriForFile(
                     context,
-                    "com.akslabs.circletosearch.fileprovider",
+                    "com.akslabs.circletosearch.pixelbar.fileprovider",
                     file
                 )
             } catch (e: Exception) {

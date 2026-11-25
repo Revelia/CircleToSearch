@@ -2,7 +2,7 @@
  * Copyright (C) 2025 AKS-Labs
  */
 
-package com.akslabs.circletosearch.ui
+package com.akslabs.circletosearch.pixelbar.ui
 
 import android.content.Context
 import androidx.compose.foundation.background
@@ -29,7 +29,7 @@ import android.os.Build
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.akslabs.circletosearch.data.*
+import com.akslabs.circletosearch.pixelbar.data.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch
+package com.akslabs.circletosearch.pixelbar
 
 import android.content.Context
 import android.content.Intent
@@ -29,7 +29,7 @@ import android.app.assist.AssistStructure
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.Build
-import com.akslabs.circletosearch.data.BitmapRepository
+import com.akslabs.circletosearch.pixelbar.data.BitmapRepository
 
 class AssistSessionService : VoiceInteractionSessionService() {
 
@@ -51,7 +51,7 @@ class AssistSessionService : VoiceInteractionSessionService() {
 
             // Clear data at the absolute start of the session to prevent race conditions 
             // with onHandleAssist/onHandleScreenshot delivery order.
-            com.akslabs.circletosearch.data.AssistDataRepository.clear()
+            com.akslabs.circletosearch.pixelbar.data.AssistDataRepository.clear()
 
             // Ensure our session window doesn't intercept target app touches
             window?.window?.addFlags(android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
@@ -76,7 +76,7 @@ class AssistSessionService : VoiceInteractionSessionService() {
                 return
             }
 
-            val allNodes = mutableListOf<com.akslabs.circletosearch.ui.components.TextNode>()
+            val allNodes = mutableListOf<com.akslabs.circletosearch.pixelbar.ui.components.TextNode>()
             val coveredRects = mutableListOf<android.graphics.Rect>()
             
             android.util.Log.d("AssistSessionService", "Capturing AssistStructure - Window count: ${structure.windowNodeCount}")
@@ -109,14 +109,14 @@ class AssistSessionService : VoiceInteractionSessionService() {
                 android.util.Log.d("AssistSessionService", "Extracted total of ${allNodes.size} text nodes from all windows")
             }
             
-            com.akslabs.circletosearch.data.AssistDataRepository.setNodes(allNodes)
+            com.akslabs.circletosearch.pixelbar.data.AssistDataRepository.setNodes(allNodes)
         }
 
         private fun collectTextNodes(
             node: AssistStructure.ViewNode,
             parentX: Int,
             parentY: Int,
-            list: MutableList<com.akslabs.circletosearch.ui.components.TextNode>,
+            list: MutableList<com.akslabs.circletosearch.pixelbar.ui.components.TextNode>,
             coveredRects: List<android.graphics.Rect>
         ) {
             val nodeX = parentX + node.left
@@ -151,7 +151,7 @@ class AssistSessionService : VoiceInteractionSessionService() {
                 val wordStrings = text.split(Regex("\\s+")).filter { it.isNotBlank() }
                 if (wordStrings.isNotEmpty()) {
                     var currentStartIndex = 0
-                    val words = mutableListOf<com.akslabs.circletosearch.ui.components.Word>()
+                    val words = mutableListOf<com.akslabs.circletosearch.pixelbar.ui.components.Word>()
                     
                     wordStrings.forEachIndexed { wordIndex, wordText ->
                         val startIndex = text.indexOf(wordText, currentStartIndex)
@@ -160,7 +160,7 @@ class AssistSessionService : VoiceInteractionSessionService() {
                             currentStartIndex = endIndex
                             val wordBounds = android.graphics.RectF(nodeRect)
                             words.add(
-                                com.akslabs.circletosearch.ui.components.Word(
+                                com.akslabs.circletosearch.pixelbar.ui.components.Word(
                                     text = wordText,
                                     index = wordIndex,
                                     startIndex = startIndex,
@@ -172,7 +172,7 @@ class AssistSessionService : VoiceInteractionSessionService() {
                     }
 
                     list.add(
-                        com.akslabs.circletosearch.ui.components.TextNode(
+                        com.akslabs.circletosearch.pixelbar.ui.components.TextNode(
                             id = java.util.UUID.randomUUID().toString(),
                             fullText = text,
                             bounds = nodeRect,

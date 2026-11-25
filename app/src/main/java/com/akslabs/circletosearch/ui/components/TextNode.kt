@@ -1,4 +1,4 @@
-package com.akslabs.circletosearch.ui.components
+package com.akslabs.circletosearch.pixelbar.ui.components
 
 import android.graphics.Rect
 import android.graphics.RectF

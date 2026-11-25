@@ -17,7 +17,7 @@
  *
  */
 
-package com.akslabs.circletosearch
+package com.akslabs.circletosearch.pixelbar
 
 import android.accessibilityservice.AccessibilityService
 import android.annotation.SuppressLint
@@ -55,19 +55,27 @@ import android.view.ViewOutlineProvider
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import com.akslabs.circletosearch.data.ActionType
-import com.akslabs.circletosearch.data.BitmapRepository
-import com.akslabs.circletosearch.data.GestureType
-import com.akslabs.circletosearch.data.OverlayConfigurationManager
-import com.akslabs.circletosearch.data.OverlaySegment
-import com.akslabs.circletosearch.ui.components.CopyTextOverlayManager
-import com.akslabs.circletosearch.utils.ImageUtils
+import com.akslabs.circletosearch.pixelbar.data.ActionType
+import com.akslabs.circletosearch.pixelbar.data.BitmapRepository
+import com.akslabs.circletosearch.pixelbar.data.GestureType
+import com.akslabs.circletosearch.pixelbar.data.OverlayConfigurationManager
+import com.akslabs.circletosearch.pixelbar.data.OverlaySegment
+import com.akslabs.circletosearch.pixelbar.ui.components.CopyTextOverlayManager
+import com.akslabs.circletosearch.pixelbar.utils.ImageUtils
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 class CircleToSearchAccessibilityService : AccessibilityService() {
 
     private var windowManager: WindowManager? = null
+    private val pixelBar by lazy { PixelNavigationHold(this) }
+    private var watchingMiCTS = false
+    private val miCtsPackages = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: android.content.Context, intent: android.content.Intent) {
+            pixelBar.cancel()
+            updateOverlay()
+        }
+    }
     private val overlayViews = mutableListOf<View>() // Track all added segment views
     private val executor: Executor = Executors.newSingleThreadExecutor()
     private lateinit var configManager: OverlayConfigurationManager
@@ -98,6 +106,16 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
         super.onServiceConnected()
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         configManager = OverlayConfigurationManager(this)
+        if (!watchingMiCTS) {
+            val filter = android.content.IntentFilter().apply {
+                addAction(android.content.Intent.ACTION_PACKAGE_ADDED)
+                addAction(android.content.Intent.ACTION_PACKAGE_REMOVED)
+                addDataScheme("package")
+                addDataSchemeSpecificPart("com.parallelc.micts", android.os.PatternMatcher.PATTERN_LITERAL)
+            }
+            registerReceiver(miCtsPackages, filter)
+            watchingMiCTS = true
+        }
         
         // node info from other windows without touching AndroidManifest.xml.
         // Also enable enhanced web accessibility for better WebView coverage.
@@ -258,12 +276,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
                 val params = view.layoutParams as WindowManager.LayoutParams
                 
                 // Update params
-                var changed = false
-                if (params.width != segment.width) { params.width = segment.width; changed = true }
-                if (params.height != segment.height) { params.height = segment.height; changed = true }
-                if (params.x != segment.xOffset) { params.x = segment.xOffset; changed = true }
-                if (params.y != segment.yOffset) { params.y = segment.yOffset; changed = true }
-                
+                val changed = pixelBar.position(params, segment)
                 if (changed) {
                     try {
                         windowManager?.updateViewLayout(view, params)
@@ -318,9 +331,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
                     PixelFormat.TRANSLUCENT
                 )
                 
-                params.gravity = Gravity.TOP or Gravity.START
-                params.x = segment.xOffset
-                params.y = segment.yOffset
+                pixelBar.position(params, segment)
                 
                  if (config.isVisible) {
                     val color = themePalette[index % themePalette.size]
@@ -353,6 +364,9 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
     
     @SuppressLint("ClickableViewAccessibility")
     private fun attachTouchListener(view: View, segment: OverlaySegment, segmentIndex: Int) {
+        val onBar = pixelBar.assigned(segment)
+        view.visibility = if (onBar && !pixelBar.available()) View.GONE else View.VISIBLE
+        var origin: Int? = null
         val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
                 val action = segment.gestures[GestureType.DOUBLE_TAP] ?: ActionType.NONE
@@ -362,7 +376,9 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
             
             override fun onLongPress(e: MotionEvent) {
                 val action = segment.gestures[GestureType.LONG_PRESS] ?: ActionType.NONE
-                if (action != ActionType.NONE) performAction(action, segment)
+                if (onBar) {
+                    pixelBar.launch(view, origin) { performAction(action, segment, GestureType.LONG_PRESS) }
+                } else if (action != ActionType.NONE) performAction(action, segment)
             }
 
             override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
@@ -452,6 +468,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
         
         view.setOnTouchListener { _, event ->
              if (event.action == MotionEvent.ACTION_DOWN) {
+                if (onBar) origin = pixelBar.focusedWindow()
                 val currentTime = System.currentTimeMillis()
                 if (currentTime - lastTapTime < 400) {
                     tapCount++
@@ -474,7 +491,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
         }
     }
     
-    private fun performAction(action: ActionType, segment: OverlaySegment) {
+    private fun performAction(action: ActionType, segment: OverlaySegment, gesture: GestureType? = null) {
         if (action == ActionType.NONE) return
         
         // Haptic feedback for action trigger
@@ -499,7 +516,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
             ActionType.OPEN_QUICK_SETTINGS -> performGlobalAction(GLOBAL_ACTION_QUICK_SETTINGS)
             ActionType.OPEN_APP -> {
                 // Open App Logic
-                val packageName = segment.gestureData[findGestureForAction(segment, ActionType.OPEN_APP)]
+                val packageName = segment.gestureData[gesture ?: findGestureForAction(segment, ActionType.OPEN_APP)]
                 if (!packageName.isNullOrEmpty()) {
                     val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
                     if (launchIntent != null) {
@@ -1077,7 +1094,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
                 val fileName = "share_pin_${java.util.UUID.randomUUID()}.png"
                 val path = ImageUtils.saveBitmap(this@CircleToSearchAccessibilityService, bitmap, fileName)
                 val file = java.io.File(path)
-                val uri = androidx.core.content.FileProvider.getUriForFile(this@CircleToSearchAccessibilityService, "com.akslabs.circletosearch.fileprovider", file)
+                val uri = androidx.core.content.FileProvider.getUriForFile(this@CircleToSearchAccessibilityService, "com.akslabs.circletosearch.pixelbar.fileprovider", file)
                 val shareIntent = Intent(Intent.ACTION_SEND).apply {
                     type = "image/png"
                     putExtra(Intent.EXTRA_STREAM, uri)
@@ -1160,7 +1177,7 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
         }
     }
 
-    override fun onInterrupt() {}
+    override fun onInterrupt() { pixelBar.cancel() }
 
     companion object {
         var instance: CircleToSearchAccessibilityService? = null
@@ -1191,6 +1208,8 @@ class CircleToSearchAccessibilityService : AccessibilityService() {
     }
 
     override fun onDestroy() {
+        pixelBar.cancel()
+        if (watchingMiCTS) unregisterReceiver(miCtsPackages)
         super.onDestroy()
         instance = null
         prefs.unregisterOnSharedPreferenceChangeListener(prefsListener)
